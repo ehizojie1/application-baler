@@ -93,7 +93,7 @@ def set_config(c):
     c.patience            = 20
     c.min_delta           = 0
     c.model_name          = "george_SAE"
-    c.custom_norm         = False
+    c.custom_norm         = True
     c.l1                  = True
     c.reg_param             = 0.001
     c.RHO                 = 0.05
@@ -281,7 +281,69 @@ def numpy_to_tensor(data):
     return torch.from_numpy(data)
 
 
+#defining custom_norm function
+def custom_normalization(data):
+    pt_div = 1.2
+    pt_sub = 1.3
+    phi_div = 3
+    eta_div = 5
+    #previously m_div was 1.8 #analysis had Mass (after compression) = 112 (very far awy from 174.94)
+    #previously m_div was 1.3 #analysis had Mass (after compression) = 173 (173.34)
+    #previously m_div was 1.1 #analysis had Mass (after compression) = 160 (very far awy from 174.94)
+    #previously m_div was 1.3 #analysis had Mass (after compression) = 173 (173.34). AGAIN
+    #previously m_div was 1.289 #analysis had Mass (after compression) = 173.78
+    #previously m_div was 1.278 #analysis had Mass (after compression) = 270. WONDERFUL (very far awy from 174.94)
+    #1.285 = 173.3
+    #1.296
+    #1.29
+    #1.288 = 260
+
+    m_div = 1.3
+    m_add = 1
+
+
+    true_min = numpy.min(data)
+    true_max = numpy.max(data)
+    feature_range = true_max - true_min
+
+
+    data['recoGenJets_slimmedGenJets__PAT.obj.m_state.p4Polar_.fCoordinates.fPt'] = (numpy.log10(data['recoGenJets_slimmedGenJets__PAT.obj.m_state.p4Polar_.fCoordinates.fPt']) - pt_sub) / pt_div #(np.log10(data['fPt']) - pt_sub) / pt_div
+    data['recoGenJets_slimmedGenJets__PAT.obj.m_state.p4Polar_.fCoordinates.fPhi'] = data['recoGenJets_slimmedGenJets__PAT.obj.m_state.p4Polar_.fCoordinates.fPhi'] / phi_div
+    data['recoGenJets_slimmedGenJets__PAT.obj.m_state.p4Polar_.fCoordinates.fEta'] = data['recoGenJets_slimmedGenJets__PAT.obj.m_state.p4Polar_.fCoordinates.fEta'] / eta_div
+    data['recoGenJets_slimmedGenJets__PAT.obj.m_state.p4Polar_.fCoordinates.fM'] = numpy.log10(data['recoGenJets_slimmedGenJets__PAT.obj.m_state.p4Polar_.fCoordinates.fM'] + m_add) / m_div
+    data['recoGenJets_slimmedGenJets__PAT.obj.m_specific.m_EmEnergy'] = numpy.log10(data['recoGenJets_slimmedGenJets__PAT.obj.m_specific.m_EmEnergy'] + m_add) / m_div
+    data['recoGenJets_slimmedGenJets__PAT.obj.m_specific.m_HadEnergy'] = numpy.log10(data['recoGenJets_slimmedGenJets__PAT.obj.m_specific.m_HadEnergy'] + m_add) / m_div
+    data['recoGenJets_slimmedGenJets__PAT.obj.m_specific.m_InvisibleEnergy'] = numpy.log10(data['recoGenJets_slimmedGenJets__PAT.obj.m_specific.m_InvisibleEnergy'] + m_add) / m_div
+    data['recoGenJets_slimmedGenJets__PAT.obj.m_specific.m_AuxiliaryEnergy'] = numpy.log10(data['recoGenJets_slimmedGenJets__PAT.obj.m_specific.m_AuxiliaryEnergy'] + m_add) / m_div
+    
+    #data = np.array(data)
+
+    return data
+
+
 def normalize(data, custom_norm, cleared_col_names):
+    print('helper.py func normalize')
+    print(data)
+
+    #if custom_norm:
+    #    #pass #to use the custom_norm, un comment the next line and commnent this line
+    #    data = custom_normalization(data)
+
+    #    #what would happen below is that fn would apply only the numpy processing, but not normalization, it would simply "pass" as specified when there exist custom_norm in data_p.py
+    #    data = numpy.apply_along_axis(
+    #        data_processing.normalize, axis=0, arr=data, custom_norm=custom_norm
+    #    )
+    #    df = data_processing.numpy_to_df(data, cleared_col_names)
+
+    #elif not custom_norm:
+    #    data = numpy.apply_along_axis(
+    #        data_processing.normalize, axis=0, arr=data, custom_norm=custom_norm
+    #    )
+    #    df = data_processing.numpy_to_df(data, cleared_col_names)
+    #return df
+
+
+
     data = numpy.apply_along_axis(
         data_processing.normalize, axis=0, arr=data, custom_norm=custom_norm
     )

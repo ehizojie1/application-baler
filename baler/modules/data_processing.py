@@ -59,10 +59,46 @@ def find_minmax(data):
     return normalization_features
 
 
+#defining custom_norm function
+#def custom_normalization(data):
+#    pt_div = 1.2
+#    pt_sub = 1.3
+#    phi_div = 3
+#    eta_div = 5
+#    m_div = 1.8
+#    m_add = 1
+
+#    data['fPt'] = data['fPt'] #(np.log10(data['fPt']) - pt_sub) / pt_div
+#    data['fPhi'] = data['fPhi'] / phi_div
+#    data['fEta'] = data['fEta'] / eta_div
+#    data['fM'] = np.log10(data['fM'] + m_add) / m_div
+#    data['m_EmEnergy'] = np.log10(data['m_EmEnergy'] + m_add) / m_div
+#    data['m_HadEnergy'] = np.log10(data['m_HadEnergy'] + m_add) / m_div
+#    data['m_InvisibleEnergy'] = np.log10(data['m_InvisibleEnergy'] + m_add) / m_div
+#    data['m_AuxiliaryEnergy'] = np.log10(data['m_AuxiliaryEnergy'] + m_add) / m_div
+    
+#    data = np.array(data)
+
+#    return data
+
 def normalize(data, custom_norm):
+    print('data_p.py func normalize')
+    print(data)
     data = np.array(data)
     if custom_norm:
-        pass
+        #pass #to use the custom_norm, un comment the next line and commnent this line
+        #data = custom_normalization(data)
+        gen_mean = np.mean(data)
+        true_min = np.min(data)
+        true_max = np.max(data)
+        gen_std = np.std(data)
+        gen_var = (gen_std)**2
+        half_std = gen_std/2
+        gen_mean_by2 = 2*gen_mean 
+        gen_std_by2 = 2*gen_std
+        feature_range = true_max - true_min
+        data = [((i - gen_std) / feature_range ) for i in data]
+        data = np.array(data)
     elif not custom_norm:
         true_min = np.min(data)
         true_max = np.max(data)
