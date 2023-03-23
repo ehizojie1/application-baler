@@ -82,7 +82,6 @@ def find_minmax(data):
 #    return data
 
 def normalize(data, custom_norm):
-    print('data_p.py func normalize')
     print(data)
     data = np.array(data)
     if custom_norm:
@@ -94,10 +93,11 @@ def normalize(data, custom_norm):
         gen_std = np.std(data)
         gen_var = (gen_std)**2
         half_std = gen_std/2
-        gen_mean_by2 = 2*gen_mean 
-        gen_std_by2 = 2*gen_std
+        gen_mean_by2 = gen_mean*2
+        gen_std_by2 = gen_std*2
+        true_mm = (true_min * true_max)/(true_min + true_max)
         feature_range = true_max - true_min
-        data = [((i - gen_std) / feature_range ) for i in data]
+        data = [((i - true_min) / feature_range )*1.015 for i in data]
         data = np.array(data)
     elif not custom_norm:
         true_min = np.min(data)

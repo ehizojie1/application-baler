@@ -85,7 +85,7 @@ def create_default_config(project_name) -> str:
     return f'''
 def set_config(c):
     c.input_path          = "data/{project_name}/{project_name}.pickle"
-    c.path_before_pre_processing = "data/example/example.root"
+    c.path_before_pre_processing = "data/my_data0/my_data0.root"
     c.compression_ratio   = 2.0
     c.epochs              = 10
     c.early_stopping      = False
@@ -322,7 +322,7 @@ def custom_normalization(data):
 
 
 def normalize(data, custom_norm, cleared_col_names):
-    print('helper.py func normalize')
+    #print('helper.py func normalize')
     print(data)
 
     #if custom_norm:
