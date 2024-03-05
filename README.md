@@ -1,19 +1,8 @@
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 
 # Introduction
-Thank you for applying! In this project we will be improving the tool our team is developing to compress scientific data using machine learning. The tool is called "Baler" and as part of your application, you will apply baler to a given particle physics dataset, a data set of your choice, and present your results. This will test your skills of working with python libraries, autoencoders, and communication skills.
-
 Baler is a tool used to test the feasibility of compressing different types of scientific data using machine learning-based autoencoders.
 
-# Table of contents
-1. [Setup](#setup)
-2. [Tutorial Example](#tutorial)
-3. [Your Task](#task)
-4. [Rules](#rules)
-5. [Deliverables](#deliverables)
-
-# Before you begin
-Before you begin, fork this repository. Your submission relies on you sharing the link to your fork beause you will put the results of your work in the `GSoC-application-baler/deliverables` diretory of your fork.
 
 # Setup <a name="setup"></a>
 ## If you are using Windows 10/11
@@ -63,11 +52,11 @@ source ~/.profile
 ```
 Clone **your fork** of this  repository
 ```console
-git clone https://github.com/USERNAME/GSoC-application-baler
+git clone https://github.com/USERNAME/application-baler
 ```
 Move into the Baler directory
 ```console
-cd GSoC-application-baler
+cd application-baler
 ```
 Use Poetry to install the project dependencies
 ```console
@@ -142,56 +131,3 @@ poetry run python baler --project=example --mode=analysis
 ```
 
 The results of the analysis comparison is shown in ``./projects/example/plotting/analysis.pdf``
-
-# Your Task  <a name="task"></a>
-## Improve Baler for High Energy Particle Physics (HEP) Data
-Your task in this application is to minimize the difference between the mass calculated before and after compression (this value is found in ./projects/example/plotting/analysis.pdf after running the analysis). You will do this by making improvements to the source code of Baler. **You are not allowed to make changes to the analysis script.**
-
-The most probable places for improvements are in:
-- Autoencoder model: ``baler/baler/modules/models.py``
-- Data Normalization: ``baler/baler/modules/data_processing.py``
-- Training Procedure: ``baler/baler/modules/training.py``
-- Training Utilities (Loss function, early stopping, etc.): ``baler/baler/modules/utils.py``
-
-## Run Baler on a Dataset of your choice
-Baler works on a lot of different data, all the way from particle physics and computational fluid dynamics to life sciences on .csv files. Create or copy an analysis from a dataset of your choice and present the analysis before/after compression. No need to optimze the training!
-
-# Rules <a name="rules"></a>
-- You are not allowed to make changes to the analysis script. You can make a copy of it if you wish to have it in another project directory, but the code for the analysis needs to be the same as in the example
-- You are not allowed to train for more epochs than 100
-- You are not allowed to use a batch size larger than 512
-
-# Deliverables <a name="deliverables"></a>
-In response to your application email, you received a link to a Google classroom. This google classroom has an assignement with details and a Google form. Your main deliverable is a link to your fork of this reository. You will provide us the link via the Google form.
-
-The other four deliverables listed below you will submit by puttng them as ".pdf" files in the `GSoC-application-baler/deliverables` directory of your fork.
-
-The deadline for your work is **20th of March 15:00 Central European Standard Time**
-
-## Present Improvements for HEP Data
-After you are satisfied with the your improvements you will make a "Power Point" style presentation of maximum 5 slides, which present:
-- Your improvements: Why and how they were implemented
-- Results: Show your results, at least by showing the output of the evaluation and analysis steps
-- Discussion
-  - Discuss the results
-  - Why your improvements work?
-  - What could be improved further
-  - What is better, a good overall evalation or a good analysis result?
-  - Can you think of any fundamental flaws with Baler? (We already know many!)
-
-## Present results from your own analysis and dataset
-Once you have performed a simple analysis before and after compression on a dataset of your choice you will make a "Power Point" style presentation of maximum 5 slides, which present:
-- The dataset
-- The analysis
-- Possible improvements
-- How you made it work with Baler
-- The impact on society this could have
-
-## Your Resume/CV
-Put acopy of you resume/CV in the deliverables diectory of your fork.
-
-## Statement of motivation
-A short text describing your motivation for working on this project with us
-
-# Assessment
-Your performance will be assessed by the improvements and implementations you are able to achieve. But equally important is your ability to communicate your work, results, and ability to discuss. The latter is very important because the Baler collaboration is an international collaboration working together remotely most of the time.
